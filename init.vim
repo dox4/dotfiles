@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug '907th/vim-auto-save'
 Plug 'vim-airline/vim-airline'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 " Don't pass messages to |ins-completion-menu|.
@@ -166,6 +167,18 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+nnoremap <silent> <leader>e :Vex<CR>
 " vim auto save
 let g:auto_save = 1
 
+let g:netrw_hide = 1
+let g:netrw_liststyle = 1
+" let g:netrw_banner = 0
+
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 24
+" show on right
+let g:netrw_altv = 1
+let g:netrw_chgwin = 2
+let g:netrw_list_hide = '.*\.swp$'
+" let g:netrw_localrmdir = 'rm -rf'
