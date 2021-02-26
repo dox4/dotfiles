@@ -182,3 +182,23 @@ let g:netrw_altv = 1
 let g:netrw_chgwin = 2
 let g:netrw_list_hide = '.*\.swp$'
 " let g:netrw_localrmdir = 'rm -rf'
+
+
+" rust settings
+let g:rustfmt_autosave = 1
+nnoremap <silent> <F8> :RustTest <cr>
+
+
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap { {}<ESC>i
+
+inoremap <silent><expr> ) <SID>get_char_at_curcor() == ')' ? "\<Esc>la" : ")"
+inoremap <silent><expr> ] <SID>get_char_at_curcor() == ']' ? "\<Esc>la" : "]"
+inoremap <silent><expr> } <SID>get_char_at_curcor() == '}' ? "\<Esc>la" : "}"
+inoremap <silent><expr> ' <SID>get_char_at_curcor() == '''' ? "\<Esc>la" : "''\<Esc>i"
+inoremap <silent><expr> " <SID>get_char_at_curcor() == '"' ? "\<Esc>la" : "\"\"\<Esc>i"
+
+function! s:get_char_at_curcor()
+    return getline('.')[col('.') - 1]
+endfunction
