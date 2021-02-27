@@ -137,6 +137,8 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
+inoremap <silent> <C-L> <Esc>:call CocAction('format')<CR>i
+nnoremap <silent> <C-L> <Esc>:call CocAction('format')<CR>
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
