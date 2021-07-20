@@ -19,6 +19,7 @@ set autoindent
 set smartindent
 set wrap
 set backspace=indent,eol,start
+set cursorline
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
@@ -26,7 +27,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug '907th/vim-auto-save'
 Plug 'vim-airline/vim-airline'
 Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'tomasiser/vim-code-dark'
+Plug 'junegunn/seoul256.vim'
 call plug#end()
+set t_Co=256
+set t_ut=
+color codedark
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -47,9 +54,9 @@ endfunction
 
 " Use <c-space> to trigger completion.
 if has('nvim')
-    inoremap <silent><expr> <c-space> coc#refresh()
-else
     inoremap <silent><expr> <c-@> coc#refresh()
+else
+    inoremap <silent><expr> <c-space> coc#refresh()
 endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
@@ -169,12 +176,16 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" set coc err msg color
+highlight CocFloating ctermbg=LightRed
+highlight CocFloating ctermfg=White
+
 nnoremap <silent> <leader>e :Vex<CR>
 " vim auto save
 let g:auto_save = 1
 
 let g:netrw_hide = 1
-let g:netrw_liststyle = 1
+let g:netrw_liststyle = 3
 " let g:netrw_banner = 0
 
 let g:netrw_browse_split = 4
@@ -187,7 +198,7 @@ let g:netrw_list_hide = '.*\.swp$'
 
 
 " rust settings
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 nnoremap <silent> <F8> :RustTest <cr>
 
 
