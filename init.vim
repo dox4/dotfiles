@@ -30,7 +30,10 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'tomasiser/vim-code-dark'
 Plug 'junegunn/seoul256.vim'
+Plug 'voldikss/vim-floaterm'
+Plug 'ianding1/leetcode.vim'
 call plug#end()
+
 set t_Co=256
 set t_ut=
 color codedark
@@ -156,7 +159,9 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+" set statusline^=%{coc#status()} " %{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -177,7 +182,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " set coc err msg color
-highlight CocFloating ctermbg=LightRed
+highlight CocFloating ctermbg=Gray
 highlight CocFloating ctermfg=White
 
 nnoremap <silent> <leader>e :Vex<CR>
@@ -189,7 +194,7 @@ let g:netrw_liststyle = 3
 " let g:netrw_banner = 0
 
 let g:netrw_browse_split = 4
-let g:netrw_winsize = 24
+let g:netrw_winsize = 15
 " show on right
 let g:netrw_altv = 1
 let g:netrw_chgwin = 2
@@ -215,3 +220,9 @@ inoremap <silent><expr> " <SID>get_char_at_curcor() == '"' ? "\<Esc>la" : "\"\"\
 function! s:get_char_at_curcor()
     return getline('.')[col('.') - 1]
 endfunction
+
+" set hotkeys for floaterm
+let g:floaterm_keymap_new    = '<F7>'
+let g:floaterm_keymap_prev   = '<F8>'
+let g:floaterm_keymap_next   = '<F9>'
+let g:floaterm_keymap_toggle = '<F12>'
