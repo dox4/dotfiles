@@ -26,12 +26,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug '907th/vim-auto-save'
 Plug 'vim-airline/vim-airline'
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'tomasiser/vim-code-dark'
 Plug 'junegunn/seoul256.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'ianding1/leetcode.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'zivyangll/git-blame.vim'
 call plug#end()
 
 set t_Co=256
@@ -42,18 +45,18 @@ color codedark
 set shortmess+=c
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
 " Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
-  \ coc#pum#visible() ? coc#pum#next(1):
-  \ <SID>check_back_space() ? "\<Tab>" :
-  \ coc#refresh()
+            \ coc#pum#visible() ? coc#pum#next(1):
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " " Use tab for trigger completion with characters ahead and navigate.
 " " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -168,8 +171,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
 " set statusline^=%{coc#status()} " %{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
@@ -190,9 +193,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" fzf short keys
+nnoremap <silent><nowait> <space>f  :Files<CR>
+nnoremap <silent><nowait> <space>b  :Buffers<CR>
+
 " set coc err msg color
-highlight CocFloating ctermbg=Gray
-highlight CocFloating ctermfg=White
+" highlight CocFloating ctermbg=Gray
+" highlight CocFloating ctermfg=White
 
 nnoremap <silent> <leader>e :Vex<CR>
 " vim auto save
@@ -235,3 +242,6 @@ let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F12>'
+
+" git-blame shorkeys
+nnoremap <leader>gb :<C-u>call gitblame#echo()<CR>
