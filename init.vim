@@ -20,6 +20,9 @@ set smartindent
 set wrap
 set backspace=indent,eol,start
 set cursorline
+set colorcolumn=120
+" why could this disable auto-completion???
+" set paste " no auto comment on pasting
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
@@ -35,11 +38,36 @@ Plug 'ianding1/leetcode.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'zivyangll/git-blame.vim'
+Plug 'thaerkh/vim-indentguides'
+Plug 'jiangmiao/auto-pairs'
+Plug 'airblade/vim-gitgutter'
+Plug 'dracula/vim', { 'as': 'dracula'  }
+" Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'  }
+Plug 'sainnhe/everforest'
+Plug 'sonph/onehalf', { 'rtp': 'vim'  }
+Plug 'bluz71/vim-moonfly-colors'
+Plug 'liuchengxu/vista.vim'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
+" display and theme
 set t_Co=256
 set t_ut=
-color codedark
+
+
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+
+" if has('termguicolors')
+"     set termguicolors
+" endif
+
+" seoul256_background 233 (darkest) ~ 239 (lightest)
+let g:seoul256_background = 233
+set background=dark
+colorscheme moonfly
+
+let g:airline_theme = 'dracula'
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -196,6 +224,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " fzf short keys
 nnoremap <silent><nowait> <space>f  :Files<CR>
 nnoremap <silent><nowait> <space>b  :Buffers<CR>
+nnoremap <silent><nowait> <space>r  :Rg<CR>
 
 " set coc err msg color
 " highlight CocFloating ctermbg=Gray
@@ -217,25 +246,8 @@ let g:netrw_chgwin = 2
 let g:netrw_list_hide = '.*\.swp$'
 " let g:netrw_localrmdir = 'rm -rf'
 
-
 " rust settings
 let g:rustfmt_autosave = 0
-nnoremap <silent> <F8> :RustTest <cr>
-
-
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
-
-inoremap <silent><expr> ) <SID>get_char_at_curcor() == ')' ? "\<Esc>la" : ")"
-inoremap <silent><expr> ] <SID>get_char_at_curcor() == ']' ? "\<Esc>la" : "]"
-inoremap <silent><expr> } <SID>get_char_at_curcor() == '}' ? "\<Esc>la" : "}"
-inoremap <silent><expr> ' <SID>get_char_at_curcor() == '''' ? "\<Esc>la" : "''\<Esc>i"
-inoremap <silent><expr> " <SID>get_char_at_curcor() == '"' ? "\<Esc>la" : "\"\"\<Esc>i"
-
-function! s:get_char_at_curcor()
-    return getline('.')[col('.') - 1]
-endfunction
 
 " set hotkeys for floaterm
 let g:floaterm_keymap_new    = '<F7>'
@@ -245,3 +257,21 @@ let g:floaterm_keymap_toggle = '<F12>'
 
 " git-blame shorkeys
 nnoremap <leader>gb :<C-u>call gitblame#echo()<CR>
+" no map for cr
+" let g:delimitMate_expand_cr = 0
+let g:AutoPairsMapCR = 0
+
+" gitgutter
+set updatetime=500
+" donot display eol
+let g:indentguides_toggleListMode = 0
+
+" tags
+nnoremap <silent><nowait> <space>t  :Tags<CR>
+nnoremap <silent><nowait> <space>g  :BTags<CR>
+" noremap <F2> :LeaderfFunction!<cr>
+" inoremap <F2> <Esc>:LeaderfFunction!<cr>
+
+nnoremap <silent><nowait> <leader>so :so %<cr>
+nnoremap <silent><nowait> <space>v :Vista<cr>
+
