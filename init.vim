@@ -21,6 +21,8 @@ set wrap
 set backspace=indent,eol,start
 set cursorline
 set colorcolumn=120
+
+let mapleader = " "
 " why could this disable auto-completion???
 " set paste " no auto comment on pasting
 
@@ -43,11 +45,18 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'dracula/vim', { 'as': 'dracula'  }
 " Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'  }
-Plug 'sainnhe/everforest'
+" Plug 'sainnhe/everforest'
 Plug 'sonph/onehalf', { 'rtp': 'vim'  }
 Plug 'bluz71/vim-moonfly-colors'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
+Plug 'github/copilot.vim'
+" nerdtree
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
 call plug#end()
 
 " display and theme
@@ -58,16 +67,18 @@ set t_ut=
 let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
 let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
-" if has('termguicolors')
-"     set termguicolors
-" endif
+if has('termguicolors')
+    set termguicolors
+endif
 
 " seoul256_background 233 (darkest) ~ 239 (lightest)
 let g:seoul256_background = 233
 set background=dark
-colorscheme moonfly
+" colorscheme everforest
+colorscheme dracula
+" colorscheme tokyonight
 
-let g:airline_theme = 'dracula'
+" let g:airline_theme = 'dracula'
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -109,8 +120,8 @@ endif
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> g[ <Plug>(coc-diagnostic-prev)
+nmap <silent> g] <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -205,46 +216,77 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>la  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <leader>le  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <leader>lc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <leader>lj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <leader>lk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <leader>lp  :<C-u>CocListResume<CR>
 
 " fzf short keys
-nnoremap <silent><nowait> <space>f  :Files<CR>
-nnoremap <silent><nowait> <space>b  :Buffers<CR>
-nnoremap <silent><nowait> <space>r  :Rg<CR>
+nnoremap <silent><nowait> <leader>ff  :Files<CR>
+nnoremap <silent><nowait> <leader>fb  :Buffers<CR>
+nnoremap <silent><nowait> <leader>fw  :Rg<CR>
 
 " set coc err msg color
 " highlight CocFloating ctermbg=Gray
 " highlight CocFloating ctermfg=White
 
-nnoremap <silent> <leader>e :Vex<CR>
 " vim auto save
 let g:auto_save = 1
 
-let g:netrw_hide = 1
-let g:netrw_liststyle = 3
-" let g:netrw_banner = 0
+" " config for netrw
+" let g:netrw_hide = 1
+" let g:netrw_liststyle = 3
+" " let g:netrw_banner = 0
+"
+" let g:netrw_browse_split = 4
+" let g:netrw_winsize = 15
+" " show on right
+" let g:netrw_altv = 1
+" let g:netrw_chgwin = 2
+" let g:netrw_list_hide = '.*\.swp$'
+" " let g:netrw_localrmdir = 'rm -rf'
+" let g:netrw_is_open = 0
+" function! ToggleNetrwVexplore()
+"     if g:netrw_is_open == 0
+"         let g:netrw_is_open = 1
+"         silent Vexplore
+"     else
+"         let i = bufnr("$")
+"         while i > 0
+"             if (getbufvar(i, "&filetype") == "netrw")
+"                 silent exe "bwipeout " . i
+"             endif
+"             let i -= 1
+"         endwhile
+"         let g:netrw_is_open = 0
+"     endif
+" endfunction
+" nnoremap <silent> <leader>e :call ToggleNetrwVexplore()<CR>
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
+" config for nerdtree
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinPos = "left"
+let g:NERDTreeWinSize = 30
+nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-let g:netrw_browse_split = 4
-let g:netrw_winsize = 15
-" show on right
-let g:netrw_altv = 1
-let g:netrw_chgwin = 2
-let g:netrw_list_hide = '.*\.swp$'
-" let g:netrw_localrmdir = 'rm -rf'
+
 
 " rust settings
 let g:rustfmt_autosave = 0
@@ -267,8 +309,8 @@ set updatetime=500
 let g:indentguides_toggleListMode = 0
 
 " tags
-nnoremap <silent><nowait> <space>t  :Tags<CR>
-nnoremap <silent><nowait> <space>g  :BTags<CR>
+" nnoremap <silent><nowait> <space>t  :Tags<CR>
+" nnoremap <silent><nowait> <space>g  :BTags<CR>
 " noremap <F2> :LeaderfFunction!<cr>
 " inoremap <F2> <Esc>:LeaderfFunction!<cr>
 
