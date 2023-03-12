@@ -32,6 +32,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug '907th/vim-auto-save'
 Plug 'vim-airline/vim-airline'
+Plug 'itchyny/vim-gitbranch'
 Plug 'cespare/vim-toml'
 Plug 'tomasiser/vim-code-dark'
 Plug 'junegunn/seoul256.vim'
@@ -39,6 +40,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'ianding1/leetcode.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc'  }
 Plug 'zivyangll/git-blame.vim'
 Plug 'thaerkh/vim-indentguides'
 Plug 'jiangmiao/auto-pairs'
@@ -67,7 +69,7 @@ if has('termguicolors')
     set termguicolors
 endif
 
-set background=dark
+let g:dracula_colorterm = 0
 colorscheme dracula
 
 " Don't pass messages to |ins-completion-menu|.
@@ -94,7 +96,7 @@ nmap <silent> g] <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gr :<C-u>CocCommand fzf-preview.CocReferences<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -185,15 +187,16 @@ nnoremap <silent><nowait> <leader>lp  :<C-u>CocListResume<CR>
 " fzf configs
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'sharp'  }  }
+let g:fzf_preview_use_dev_icons = 1
+let g:fzf_preview_dev_icons_limit = 2000
+let g:fzf_preview_history_dir = '~/.local/share/fzf-history'
 
 " fzf short keys
-nnoremap <silent><nowait> <leader>ff  :Files<CR>
-nnoremap <silent><nowait> <leader>fb  :Buffers<CR>
+nnoremap <silent><nowait> <leader>ff  :FzfPreviewProjectFiles<CR>
+nnoremap <silent><nowait> <leader>fb  :FzfPreviewBuffers<CR>
 nnoremap <silent><nowait> <leader>fw  :Rg<CR>
 
-" set coc err msg color
-" highlight CocFloating ctermbg=Gray
-" highlight CocFloating ctermfg=White
+nnoremap <silent><nowait> <leader>fr :<C-u>FzfPreviewProjectGrepRpc .<CR>
 
 " vim auto save
 let g:auto_save = 1
@@ -222,6 +225,7 @@ let g:floaterm_keymap_toggle = '<F12>'
 
 " git-blame shorkeys
 nnoremap <leader>gb :<C-u>call gitblame#echo()<CR>
+
 " no map for cr
 " let g:delimitMate_expand_cr = 0
 let g:AutoPairsMapCR = 0
@@ -235,4 +239,12 @@ let g:indentguides_toggleListMode = 0
 nnoremap <silent><nowait> <leader>so :so %<cr>
 nnoremap <silent><nowait> <space>v :Vista<cr>
 
-let $NVIM_COC_LOG_LEVEL = 'trace'
+au Filetype json set conceallevel=0
+
+" airline configuration
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#custom_head = 'gitbranch#name'
