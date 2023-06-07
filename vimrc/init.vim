@@ -50,7 +50,7 @@ Plug 'sonph/onehalf', { 'rtp': 'vim'  }
 Plug 'bluz71/vim-moonfly-colors'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
@@ -192,11 +192,11 @@ let g:fzf_preview_dev_icons_limit = 2000
 let g:fzf_preview_history_dir = '~/.local/share/fzf-history'
 
 " fzf short keys
-nnoremap <silent><nowait> <leader>ff  :FzfPreviewProjectFiles<CR>
-nnoremap <silent><nowait> <leader>fb  :FzfPreviewBuffers<CR>
+nnoremap <silent><nowait> <leader>ff  :Files<CR>
+nnoremap <silent><nowait> <leader>fb  :Buffers<CR>
 nnoremap <silent><nowait> <leader>fw  :Rg<CR>
 
-nnoremap <silent><nowait> <leader>fr :<C-u>FzfPreviewProjectGrepRpc .<CR>
+" nnoremap <silent><nowait> <leader>fr :<C-u>FzfPreviewProjectGrepRpc .<CR>
 
 " vim auto save
 let g:auto_save = 1
@@ -206,11 +206,21 @@ nnoremap <silent> <C-j> <C-w>j
 nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-l> <C-w>l
 " config for nerdtree
-let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize = 30
-nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+let g:NERDTreeAutoRefresh = 0
+function IsNerdtreeOpen() abort
+    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+function! ToggleNerdtree() abort
+    if IsNerdtreeOpen()
+        NERDTreeToggle
+    else
+        NERDTreeFind
+    endif
+endfunction
+nnoremap <silent> <leader>e :call ToggleNerdtree()<CR>
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
