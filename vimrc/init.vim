@@ -89,8 +89,8 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-nmap <silent> g[ <Plug>(coc-diagnostic-prev)
-nmap <silent> g] <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -195,6 +195,7 @@ let g:fzf_preview_history_dir = '~/.local/share/fzf-history'
 nnoremap <silent><nowait> <leader>ff  :Files<CR>
 nnoremap <silent><nowait> <leader>fb  :Buffers<CR>
 nnoremap <silent><nowait> <leader>fw  :Rg<CR>
+nnoremap <silent><nowait> <leader>gg  :FloatermNew --height=0.8 --width=0.8 lazygit<CR>
 
 " nnoremap <silent><nowait> <leader>fr :<C-u>FzfPreviewProjectGrepRpc .<CR>
 
@@ -232,6 +233,10 @@ let g:floaterm_keymap_new    = '<F7>'
 let g:floaterm_keymap_prev   = '<F8>'
 let g:floaterm_keymap_next   = '<F9>'
 let g:floaterm_keymap_toggle = '<F12>'
+let g:floaterm_width         = 0.8
+let g:floaterm_height        = 0.8
+
+nnoremap <silent><nowait> <leader>tv :FloatermNew --wintype=vsplit --width=0.5<CR>
 
 " git-blame shorkeys
 nnoremap <leader>gb :<C-u>call gitblame#echo()<CR>
