@@ -42,7 +42,8 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc'  }
 Plug 'zivyangll/git-blame.vim'
-Plug 'thaerkh/vim-indentguides'
+" Plug 'thaerkh/vim-indentguides'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'dracula/vim', { 'as': 'dracula'  }
@@ -247,14 +248,16 @@ let g:AutoPairsMapCR = 0
 
 " gitgutter
 set updatetime=500
-" donot display eol
-let g:indentguides_toggleListMode = 0
 
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+" let g:indent_guides_auto_colors = 0
+" hi IndentGuidesOdd  ctermbg=black
+" hi IndentGuidesEven ctermbg=darkgrey
 
 nnoremap <silent><nowait> <leader>so :so %<cr>
 nnoremap <silent><nowait> <space>v :Vista<cr>
-
-au Filetype json set conceallevel=0
 
 " airline configuration
 let g:airline#extensions#tabline#enabled = 1
@@ -263,3 +266,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#custom_head = 'gitbranch#name'
+
+" set list
+" set listchars=trail:·,nbsp:◇,tab:→-,extends:▸,precedes:◂,multispace:···⬝,leadmultispace:\┆\ \ \ 
+
