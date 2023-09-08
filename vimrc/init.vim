@@ -54,6 +54,7 @@ Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 call plug#end()
 
 " display and theme
@@ -259,6 +260,11 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#custom_head = 'gitbranch#name'
 
 set list
-set listchars=trail:·,nbsp:◇,tab:│\ ,extends:▸,precedes:◂,leadmultispace:\┆\ \ \ 
+set listchars=trail:·,nbsp:◇,tab:│\ ,leadmultispace:\┆\ \ \ ,extends:▸,precedes:◂
 " change color of SpecialKey from dracula
 hi SpecialKey guifg=#959595 guibg=NONE gui=NONE cterm=NONE
+
+" minimap
+let g:minimap_width = 12
+let g:minimap_auto_start = 1
+let g:minimap_auto_start_win_enter = 1
