@@ -65,7 +65,7 @@ set t_ut=
 let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
 let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
-if has('termguicolors') && (system('uname -a | grep WSL ') == '')
+if has('termguicolors') && (has('win32') || (system('uname -a | grep WSL ') == ''))
     set termguicolors
 endif
 
@@ -285,3 +285,8 @@ hi SpecialKey guifg=#959595 guibg=NONE gui=NONE cterm=NONE
 let g:minimap_width = 12
 let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 1
+
+" set powershell as shell
+if has('win32')
+    let &shell="C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+endif
