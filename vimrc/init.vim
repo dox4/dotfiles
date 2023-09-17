@@ -30,6 +30,7 @@ let mapleader = " "
 " vim-plug
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
 Plug '907th/vim-auto-save'
 Plug 'vim-airline/vim-airline'
 Plug 'itchyny/vim-gitbranch'
@@ -260,6 +261,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#custom_head = 'gitbranch#name'
+let g:airline#extensions#ale#enabled = 1
 
 let airline#extensions#vim9lsp#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -287,6 +289,8 @@ let g:minimap_auto_start = 1
 let g:minimap_auto_start_win_enter = 1
 
 " set powershell as shell
-if has('win32')
-    let &shell="C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+if (has('win32') || has('gui_win32')) && executable('pwsh')
+    set shell=pwsh
+    set shellcmdflag=-NoProfile\ -Command
+    set shellquote=\"
 endif
