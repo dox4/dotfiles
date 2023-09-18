@@ -295,3 +295,6 @@ if (has('win32') || has('gui_win32')) && executable('pwsh')
     set shellcmdflag=-NoProfile\ -Command
     set shellquote=\"
 endif
+
+" ale config
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
