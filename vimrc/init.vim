@@ -1,4 +1,6 @@
-set nu
+set encoding=utf8
+scriptencoding=utf8
+set number
 filetype plugin on
 filetype indent on
 
@@ -7,9 +9,8 @@ set ruler    " always show current position
 set hlsearch
 set showmatch
 syntax enable
-set encoding=utf8
 set nobackup
-set nowb
+set nowritebackup
 set noswapfile
 set expandtab
 set smarttab
@@ -26,7 +27,7 @@ set spell
 set spelloptions=camel
 set dictionary+=~/.dict/aspell-en.dict
 
-let mapleader = " "
+let mapleader = ' '
 
 " vim-plug
 call plug#begin('~/.vim/plugged')
@@ -67,7 +68,7 @@ set t_ut=
 let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
 let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
-if has('termguicolors') && (has('win32') || (system('uname -a | grep WSL ') == ''))
+if has('termguicolors') && (has('win32') || (system('uname -a | grep WSL ') ==# ''))
     set termguicolors
 endif
 
@@ -105,18 +106,20 @@ nmap <silent> gr :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+    if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
+    else
+        call feedkeys('K', 'in')
+    endif
 endfunction
 
 " Run the Code Lens action on the current line
 nmap <leader>cl  <Plug>(coc-codelens-action)
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup cocCursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup end
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -212,11 +215,11 @@ nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-l> <C-w>l
 " config for nerdtree
 let g:NERDTreeMinimalUI = 1
-let g:NERDTreeWinPos = "left"
+let g:NERDTreeWinPos = 'left'
 let g:NERDTreeWinSize = 30
 let g:NERDTreeAutoRefresh = 0
 function IsNerdtreeOpen() abort
-    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+    return exists('t:NERDTreeBufName') && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 function! ToggleNerdtree() abort
     if IsNerdtreeOpen()
@@ -226,8 +229,11 @@ function! ToggleNerdtree() abort
     endif
 endfunction
 nnoremap <silent> <leader>e :call ToggleNerdtree()<CR>
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+augroup quitVimWhenOnlyNerdtree
+    " Exit Vim if NERDTree is the only window remaining in the only tab.
+    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+augroup end
 
 " rust settings
 let g:rustfmt_autosave = 0
