@@ -23,6 +23,7 @@ set cursorline
 set colorcolumn=120
 set complete+=k
 set spell
+set spelloptions=camel
 set dictionary+=~/.dict/aspell-en.dict
 
 let mapleader = " "
