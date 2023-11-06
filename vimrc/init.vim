@@ -57,7 +57,6 @@ Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 call plug#end()
 
 " display and theme
@@ -202,6 +201,7 @@ let g:fzf_preview_history_dir = '~/.local/share/fzf-history'
 nnoremap <silent><nowait> <leader>ff  :Files<CR>
 nnoremap <silent><nowait> <leader>fb  :Buffers<CR>
 nnoremap <silent><nowait> <leader>fw  :Rg<CR>
+nnoremap <silent><nowait> <leader>sg  :Rg<CR>
 nnoremap <silent><nowait> <leader>gg  :FloatermNew --height=0.8 --width=0.8 lazygit<CR>
 
 " nnoremap <silent><nowait> <leader>fr :<C-u>FzfPreviewProjectGrepRpc .<CR>
@@ -246,6 +246,7 @@ let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_width         = 0.8
 let g:floaterm_height        = 0.8
 
+nnoremap <silent><nowait> <leader>ft :FloatermNew <CR>
 nnoremap <silent><nowait> <leader>tv :FloatermNew --wintype=vsplit --width=0.5<CR>
 
 " git-blame shorkeys
@@ -289,11 +290,6 @@ set list
 set listchars=trail:·,nbsp:◇,tab:│\ ,leadmultispace:\┆\ \ \ ,extends:▸,precedes:◂
 " change color of SpecialKey from dracula
 hi SpecialKey guifg=#959595 guibg=NONE gui=NONE cterm=NONE
-
-" minimap
-let g:minimap_width = 12
-let g:minimap_auto_start = 1
-let g:minimap_auto_start_win_enter = 1
 
 " set powershell as shell
 if (has('win32') || has('gui_win32')) && executable('pwsh')
